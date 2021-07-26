@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-i18n@8"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital@1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <title>Document Vue</title>
+</head>
+
+<body>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            display: flex;
+            padding-left: 5px;
+        }
+
+        li {
+            padding-right: 10px;
+            list-style-type: none;
+        }
+
+        span {
+            padding-right: 5px;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .EditMenu-wrap {
+            /* padding-left: 50px; */
+            padding-bottom: 20px;
+        }
+
+        .EditMenu {
+            border: black solid 1px;
+            border-radius: 4px;
+            width: 300px;
+        }
+
+        .btn_form {
+            display: flex;
+        }
+
+        .title_newTags {
+            text-align: center;
+        }
+
+        .inputNewTags {
+            margin-left: 20px;
+        }
+
+        /* The switch - the box around the slider */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 32px;
+            height: 19px;
+        }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+            display: none;
+        }
+
+        /* The slider */
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 15px;
+            width: 15px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked+.slider {
+            background-color: #2196F3;
+        }
+
+        input:focus+.slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked+.slider:before {
+            -webkit-transform: translateX(13px);
+            -ms-transform: translateX(13px);
+            transform: translateX(13px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        .lang_group {
+            display: flex;
+            /* align-items: center; */
+            justify-content: space-between;
+            height: 19px;
+            padding-top: 13px;
+        }
+
+        .en_lang {
+            padding-left: 10px;
+        }
+
+        .wrap {
+            width: 1180px;
+            margin: 0 auto;
+        }
+
+        p,
+        label,
+        button,
+        span {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        p {
+            padding-bottom: 10px;
+
+        }
+
+        li {
+            font-family: 'Montserrat', sans-serif;
+            font-style: italic;
+        }
+
+        .Mlang {
+            width: 100%;
+            position: fixed;
+            height: 50px;
+            background-color: aliceblue;
+            opacity: 0.9;
+        }
+
+        .group_items {
+            display: flex;
+            /* justify-content: space-between; */
+            flex-direction: column;
+        }
+
+        .group_element {
+            display: flex;
+            align-items: center;
+            /* justify-content: space-between; */
+        }
+
+        .change_img {
+            width: 20px;
+        }
+
+        .img_block {
+            width: 105px;
+        }
+
+        .img_block {
+            padding-left: 35px;
+
+        }
+
+        .title_img {
+            padding-left: 35px;
+            padding-left: 10%;
+        }
+
+        .items_btn {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn_del {
+            margin-right: 15px;
+        }
+
+        .en_lang {
+            width: 21px;
+        }
+
+        .AddElement {
+            padding-top: 70px;
+        }
+
+        .ShowMenu {
+            padding-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .btn_del {
+            width: 80px;
+            height: 40px;
+            border: none;
+            background-color: #ff0000e3;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn_del:hover {
+            width: 80px;
+            height: 40px;
+            border: none;
+            background-color: #df0000e3;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn_ed {
+            width: 130px;
+            height: 40px;
+            border: none;
+            background-color: #198754;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn_ed:hover {
+            width: 130px;
+            height: 40px;
+            border: none;
+            background-color: #017a42;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .checkbox_el {
+            width: 17px;
+            height: 17px;
+        }
+
+        .MSelectMenu {
+            padding-top: 70px;
+        }
+
+        .btnAddEl {
+            border: none;
+            background-color: Transparent;
+            background-repeat: no-repeat;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .btn_switch {
+            display: flex;
+        }
+
+        .inputNewElement {
+            height: 20px;
+            width: 180px;
+        }
+
+        .addItem {
+            background-color: Transparent;
+            background-repeat: no-repeat;
+            outline: none;
+            cursor: pointer;
+            width: 130px;
+            height: 40px;
+            margin-top: 10px;
+        }
+
+        .addItem:hover {
+            outline: none;
+            cursor: pointer;
+            width: 130px;
+            height: 40px;
+            margin-top: 10px;
+            background-color: blue;
+            color: white;
+            border: none;
+        }
+
+        .btn_auth {
+            background-color: Transparent;
+            background-repeat: no-repeat;
+            outline: none;
+            cursor: pointer;
+            border: none;
+            margin-right: 40px;
+        }
+
+        .example-2 .btn-tertiary {
+            color: #555;
+            padding: 0;
+            line-height: 40px;
+            margin-top: 15px;
+            width: 160px;
+            /* margin: auto; */
+            display: block;
+            border: 2px solid #555
+        }
+
+        .example-2 .btn-tertiary:hover,
+        .example-2 .btn-tertiary:focus {
+            /* color: #888; */
+            color: rgb(4, 160, 4);
+            /* border-color: #888; */
+            border-color: rgb(4, 160, 4);
+        }
+
+        .example-2 .input-file {
+            width: .1px;
+            height: .1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1
+        }
+
+        .example-2 .input-file+.js-labelFile {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding: 0 10px;
+            cursor: pointer
+        }
+
+        .example-2 .input-file+.js-labelFile .icon:before {
+            content: "\f093"
+        }
+
+        .example-2 .input-file+.js-labelFile.has-file .icon:before {
+            content: "\f00c";
+            color: #5AAC7B
+        }
+
+        .inputNewElement {
+            outline: none;
+            height: 30px;
+            width: 250px;
+            border-radius: 0;
+            border: 2px solid #555
+        }
+    </style>
+
+    <div id="app">
+        <main-menu :items-list="itemsList" :langs-list="langsList"></main-menu>
+        <!-- <button id="show-modal" @click="showModal = true">Show Modal</button> -->
+    </div>
+
+    <!-- Компонент шапки -->
+    <script type="text/template" id="MLang-template">
+        <div class="Mlang">
+            <div class="wrap">
+                <div class="lang_group">
+                    <div class="btn_block">
+                        <button class="btnAddEl" id="show-modal" @click="showEditmethod()"> {{ $t("message.addNewElement") }} </button>
+                    </div>
+                    <div class="btn_switch">
+                        <button class="btn_auth"> {{ $t("message.authBtn") }} </button>
+                        <label class="switch">
+                            <input type="checkbox" v-model="langComputed" @click="changeLang()">
+                            <span class="slider round"></span>
+                        </label>
+                        <p class="en_lang" v-if="checkedLang === false">{{ langsList.lang = "ru" }}</p>
+                        <p class="en_lang" v-if="checkedLang === true">{{ langsList.lang = "en" }}</p>
+                    </div>
+                </div>
+                
+            </div>  
+        </div>
+    </script>
+
+    <script>
+        const MLang = Vue.extend({
+            name: "MLang",
+            template: document.querySelector('#MLang-template').textContent,
+            props: {
+                checkedLang: { required: true },
+                langsList: { required: true },
+                showEdit: { required: true }
+            },
+            computed: {
+                langComputed: {
+                    get() {
+                        return this.checkedLang
+                    },
+                    set(val) {
+                        this.$emit('update:checkedLang', val)
+                    }
+                },
+            },
+            methods: {
+                changeLang: function () {
+                    if (this.checkedLang == false) {
+                        i18n.locale = "en"
+                    }
+                    else {
+                        i18n.locale = "ru"
+                    }
+                },
+                showEditmethod: function () {
+                    if (this.showEdit === false) {
+                        this.$emit('update:showEdit', true)
+                    }
+                    else {
+                        this.$emit('update:showEdit', false)
+                    }
+                }
+            }
+        })
+    </script>
+
+    <!-- Компонент выбора -->
+    <script type="text/template" id="MSelect-template">
+        <div class="MSelectMenu">
+            <div class="wrap">
+                <div class="group_items">
+                    <template v-for="(el, index) in itemsList">
+                        <!-- <input type="checkbox" v-bind:value="el" v-model="checkedNames"> -->
+                        <!-- <div class="img_block"> -->
+                        <div class="group_element">
+                            <div class="change_img">
+                                <input class="checkbox_el" type="checkbox" :value="el" v-model="checkedComputed">
+                            </div>
+                            <div class="img_block">
+                                <img :src="el.img" alt=""> 
+                            </div>
+                            <div class="title_img">
+                                <label v-if="checkedLang === false"> {{el.titleRu}} </label>
+                                <label v-if="checkedLang === true"> {{el.titleEn}} </label>
+                            </div>
+                            <div class="items_btn">
+                                <button class="btn_del" @click="deleteItems(index)"> {{ $t("message.delBtnLang") }} </button>
+                                <button class="btn_ed" id="show-modal" @click="showModalmethod(index)"> {{ $t("message.edBtnLang") }} </button> <br>
+                            </div>
+                        </div>    
+                            
+                        <!-- </div> -->
+                        
+                    </template>
+                </div> 
+            </div>
+        </div>
+    </script>
+
+    <script>
+        const MSelect = Vue.extend({
+            name: "MSelect",
+            template: document.querySelector('#MSelect-template').textContent,
+            props: {
+                itemsList: { required: true },
+                checkedNames: { required: true },
+                showModal: { required: true },
+                editItem: { required: true },
+                checkedLang: { required: true },
+                langsList: { required: true },
+            },
+            computed: {
+                checkedComputed: {
+                    get() {
+                        return this.checkedNames
+                    },
+                    set(val) {
+                        this.$emit('update:checkedNames', val)
+                    }
+                },
+            },
+            methods: {
+                deleteItems: function (index) {
+                    if (this.checkedLang === false) {
+                        if (confirm("Удалить запись?")) {  // сделать перевод
+                            let copyCheckedNames = [...this.checkedNames]
+                            let idx = this.checkedNames.indexOf(index)
+                            console.log(idx)
+
+                            this.itemsList.splice(index, 1)
+
+                            copyCheckedNames.splice(idx, 1)
+                            this.$emit('update:checkedNames', copyCheckedNames)
+                        }
+                    }
+                    else {
+                        if (confirm("Delete an entry?")) {  // сделать перевод
+                            let copyCheckedNames = [...this.checkedNames]
+                            let idx = this.checkedNames.indexOf(index)
+                            console.log(idx)
+
+                            this.itemsList.splice(index, 1)
+
+                            copyCheckedNames.splice(idx, 1)
+                            this.$emit('update:checkedNames', copyCheckedNames)
+                        }
+                    }
+
+                },
+                showModalmethod: function (index) {
+                    this.$emit('update:showModal', true)
+                    this.$emit('update:editItem', index)
+                }
+            }
+        })
+    </script>
+
+    <!-- Компонент отображения -->
+    <script type="text/template" id="ShowMenu-template">
+        <div class="ShowMenu">
+            <div class="wrap">
+                <ul>
+                    <span> {{ $t("message.allWordsLang") }} </span>
+                    <li v-for="word in allWords">{{ word }}</li>
+                </ul>
+                <ul>
+                    <span>{{ $t("message.wicLang") }}</span>
+                    <li v-for="item in wicArr"> {{ item }} </li>
+                </ul>
+                <ul>
+                    <span>{{ $t("message.topArrLang") }}</span>
+                    <li v-for="key in topArr"> {{ key }} </li>
+                </ul>
+            </div>
+        </div>
+    </script>
+
+    <script>
+        const MShow = Vue.extend({
+            name: "MShow",
+            template: document.querySelector('#ShowMenu-template').textContent,
+            props: {
+                itemsList: { required: true },
+                checkedNames: { required: true },
+                aWords: { required: true },
+                checkedLang: { required: true },
+            },
+            computed: {
+                wordsComputed: {
+                    get() {
+                        return this.aWords
+                    },
+                    set(items) {
+                        this.$emit('update:aWords', items)
+                    }
+                },
+
+                allWords: function () {
+                    let tmp = [];
+                    let tmpD = [];
+                    let tmpUnique = [];
+
+                    for (let i = 0; i < this.checkedNames.length; i++) {
+                        // if (this.checkedLang === false) {
+                        //     tmp.push(this.checkedNames[i].keywordsRu)
+                        // }
+                        // else {
+                        //     tmp.push(this.checkedNames[i].keywordsEn)
+                        // }
+                        tmp.push(this.checkedNames[i].keywordsRu)
+                    }
+
+                    tmpD = tmp.flat()
+                    this.wordsComputed = tmpD
+
+                    tmpUnique = [...new Set(tmpD)]
+
+                    return tmpUnique
+                },
+
+                wicArr: function () {
+                    let wic = [];
+                    let tmpM = [];
+                    let tmpA = [];
+
+                    wic = this.wordsComputed.filter(function (elem, pos, arr) {
+                        return pos !== arr.indexOf(elem) || pos !== arr.lastIndexOf(elem);
+                    });
+
+                    wic = wic.filter(function (item, pos) {
+                        return wic.indexOf(item) == pos;
+                    })
+
+                    wic = [...new Set(wic)]
+
+                    return wic;
+                },
+
+                topArr: function () {
+                    let wt = {}
+                    let wtt = []
+                    let twst = []
+
+                    let tmpM = [];
+                    let tmpA = [];
+
+                    for (i in this.wordsComputed) {
+                        if (wt.hasOwnProperty(this.aWords[i])) {
+                            wt[this.wordsComputed[i]]++
+                        }
+                        else {
+                            wt[this.wordsComputed[i]] = 1
+                        }
+                    }
+                    wt = Object.entries(wt).sort(([, a], [, b]) => b - a)
+                    twst = wt.flat()
+                    wtt = twst.slice(0, 6)
+
+                    return wtt
+                }
+            }
+        })
+    </script>
+
+    <!-- Форма добавления -->
+    <script type="text/template" id="AddElement-template">
+        <div class="AddElement">
+            <div class="wrap">
+                <form class="form_add" action="">
+                    <p> {{ $t("message.inputCategory") }} </p>
+                    <input class="inputNewElement" type="text" id="id_title" v-model="categoryComputed">
+                    <p> {{ $t("message.inputTags") }} </p>
+                    <input class="inputNewElement" type="text" id="id_keywords" v-model="tagsComputed">
+                    <br>
+                    <!-- <p> {{ $t("message.inputLink") }} </p> -->
+                    <!-- <input class="inputNewElement" type="text" id="id_img" v-model="imageComputed"> -->
+                    <div class="example-2">
+                        <div class="form-group">
+                            <input type="file" name="file" id="file" class="input-file">
+                            <label for="file" class="btn btn-tertiary js-labelFile">
+                            <i class="icon fa fa-check"></i>
+                            <span class="js-fileName">{{ $t("message.upLoad") }}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <br>
+                    <button class="addItem" type="button" id="btn_add" @click="formObject">{{ $t("message.addBtnLang") }}</button>
+                    <!-- <button type="button" id="btn_add" @click="itemsList.push(category)">Добавить</button> -->
+    
+                    <!-- https://st.depositphotos.com/1006597/1761/i/950/depositphotos_17614889-stock-photo-fresh-lemon.jpg -->
+                </form>
+            </div>
+        </div>
+    </script>
+
+    <script>
+        const AElement = Vue.extend({
+            name: "AElement",
+            template: document.querySelector('#AddElement-template').textContent,
+            props: {
+                itemsList: { required: true },
+                category: { required: true },
+                tags: { required: true },
+                image: { required: true },
+                showEdit: { required: true },
+            },
+            computed: {
+                tagsComputed: {
+                    get() {
+                        return this.tags
+                    },
+                    set(val) {
+                        this.$emit('update:tags', val)
+                    }
+                },
+                categoryComputed: {
+                    get() {
+                        return this.category
+                    },
+                    set(val) {
+                        this.$emit('update:category', val)
+                    }
+                },
+                imageComputed: {
+                    get() {
+                        return this.image
+                    },
+                    set(val) {
+                        this.$emit('update:image', val)
+                    }
+                }
+            },
+            methods: {
+                // формирование объекта из input формы
+                formObject: function () {
+                    // let newId = 4
+                    if (this.tagsComputed) {
+                        let newObject = {}
+                        let upTags = this.tagsComputed.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1)).join(' ')
+                        let newTags = upTags.split(";").filter(n => n) // хз
+                        // if (this.checkedLang === false) {
+                        //     newObject = { titleRu: this.categoryComputed, keywordsRu: newTags, img: this.imageComputed }
+                        // }
+                        // else {
+                        //     newObject = { titleEn: this.categoryComputed, keywordsEn: newTags, img: this.imageComputed }
+                        // }
+                        newObject = { titleRu: this.categoryComputed, keywordsRu: newTags, img: this.imageComputed }
+
+                        this.itemsList.push(newObject)
+                    }
+                    this.categoryComputed = ''
+                    this.tagsComputed = ''
+                    this.imageComputed = ''
+                },
+
+            },
+
+        })
+    </script>
+
+    <!-- Компонент редактирования -->
+    <script type="text/template" id="EditMenu-template">
+        <div class="wrap">
+            <div class="EditMenu">
+                    <div class="EditMenu-wrap">
+                        <p class="title_newTags"> {{ $t("message.inputNewTags") }} </p>
+                        <input class="inputNewTags" type="text" id="newItemCategory" v-model="newTagsComputed"> <br>
+                        <div class="btn_form">
+                            <button id="addNewTags" type="button" @click="editTags"> {{ $t("message.updateBtn") }} </button>
+                            <button id="closeNewTagsForm" type="button" @click="closeTagsForm()"> {{ $t("message.closeBtnLang") }} </button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        
+    </script>
+
+    <script>
+        const EMenu = Vue.extend({
+            name: "EMenu",
+            template: document.querySelector('#EditMenu-template').textContent,
+            props: {
+                itemsList: { required: true },
+                newTagsAdd: { required: true },
+                showModal: { required: true },
+                editItem: { required: true },
+            },
+            computed: {
+                newTagsComputed: {
+                    get() {
+                        return this.newTagsAdd
+                    },
+                    set(val) {
+                        this.$emit('update:newTagsAdd', val)
+                    }
+                },
+            },
+            methods: {
+                editTags: function () {
+                    if (this.newTagsComputed) {
+                        let tmpTags = this.newTagsComputed.split(" ").filter(n => n)
+                        console.log(tmpTags)
+                        // if (this.checkedLang === false) {
+                        //     this.itemsList[this.editItem].keywordsRu = tmpTags
+                        // }
+                        // else {
+                        //     this.itemsList[this.editItem].keywordsEn = tmpTags
+                        // }
+                        this.itemsList[this.editItem].keywordsRu = tmpTags
+                        this.newTagsComputed = ''
+                        this.$emit('update:showModal', false)
+                    }
+                },
+                closeTagsForm: function () {
+                    this.$emit('update:showModal', false)
+                }
+            }
+        })
+    </script>
+
+    <!-- Основной компонент -->
+    <script type="text/template" id="MainMenu-template">
+        <div class="MainMenu">
+            <div class="MainMunu-menu">
+                <m-lang :m-lang="langsList" :checkedLang="checkedLang" :checkedLang.sync="checkedLang"
+                    :langsList="langsList" :showEdit.sync="showEdit"></m-lang>
+                <a-element :a-element="itemsList" :items-list="itemsList"
+                    :tags.sync="tags" :category.sync="category" :image.sync="image"
+                    v-if="showEdit" :showEdit.sync="showEdit" ></a-element>
+                <m-select :m-select="itemsList" :items-list="itemsList"
+                    :checked-names.sync="checkedNames" :showModal.sync="showModal"
+                    :editItem.sync="editItem" :langsList="langsList"
+                    :checkedLang="checkedLang" :checkedLang.sync="checkedLang"></m-select>
+                <m-show :m-show="itemsList" :items-list="itemsList" 
+                    :checked-names.sync="checkedNames" :langsList="langsList"
+                    :a-words.sync="aWords" :checkedLang="checkedLang"></m-show>
+                <e-menu :e-menu="itemsList" :items-list="itemsList" 
+                    :newTagsAdd.sync="newTagsAdd" v-if="showModal" @close="showModal = false"
+                    :showModal.sync="showModal" :editItem.sync="editItem"></e-menu>
+            </div>
+        </div>
+    </script>
+
+    <script>
+        const i18n = new VueI18n({
+            locale: 'ru',
+            silentFallbackWarn: true,
+            messages: {
+                en: {
+                    message: {
+                        allWordsLang: 'All words from categories:',
+                        wicLang: 'Identical words in the selected categories:',
+                        topArrLang: 'Top 3 words encountered:',
+                        inputCategory: 'Enter a category:',
+                        inputTags: 'Enter the tags (separated by a space):',
+                        inputLink: 'Remove the image:',
+                        delBtnLang: 'Delete',
+                        edBtnLang: 'Edit',
+                        addBtnLang: 'Add',
+                        closeBtnLang: 'Close',
+                        inputNewTags: 'Additional tags (separated by a space):',
+                        addNewElement: 'Add new entry',
+                        authBtn: 'LogOut',
+                        deleteEntry: 'Delete an entry?',
+                        updateBtn: 'Update',
+                        upLoad: 'Upload file',
+                    }
+                },
+                ru: {
+                    message: {
+                        allWordsLang: 'Все слова из категорий:',
+                        wicLang: 'Одинаковые слова в выбранных категориях:',
+                        topArrLang: 'Топ 3 встречаемых слова:',
+                        inputCategory: 'Введите категорию:',
+                        inputTags: 'Введите тэги (через пробел):',
+                        inputLink: 'Дабвьте картинку:',
+                        delBtnLang: 'Удалить',
+                        edBtnLang: 'Редактировать',
+                        addBtnLang: 'Добавить',
+                        closeBtnLang: 'Закрыть',
+                        inputNewTags: 'Дополнительные тэги (через пробел):',
+                        addNewElement: 'Добавить новую запись',
+                        authBtn: 'Выход',
+                        deleteEntry: 'Удалить запись?',
+                        updateBtn: 'Обновить',
+                        upLoad: 'Загрузить файл',
+                    }
+                }
+            }
+        })
+
+        const MainMenu = Vue.extend({
+            name: "MainMenu",
+            template: document.querySelector('#MainMenu-template').textContent,
+            i18n,
+            components: {
+                MShow,
+                MSelect,
+                AElement,
+                EMenu,
+                MLang,
+            },
+            props: {
+                itemsList: { required: true },
+                langsList: { required: true },
+            },
+            data() {
+                return {
+                    checkedNames: [], //выбранные категории
+                    aWords: [], //все слова
+                    category: "", //title
+                    tags: "", //keywords
+                    image: "", //img 
+                    newTagsAdd: [], //новые теги
+                    showModal: false,
+                    showEdit: false,
+                    editItem: 0, // индекс объекта
+                    checkedLang: false,
+                    // msg: `{{ $t("deleteEntry") }}`
+                    // msg: this.$i18n.t("deleteEntry")
+
+                }
+            }
+        })
+    </script>
+
+    <script>
+        const Main = new Vue({
+            el: '#app',
+            components: {
+                MainMenu
+            },
+            data: {
+                itemsList: [
+                    {
+                        titleRu: "Яблоко",
+                        titleEn: "Apple",
+                        keywordsRu: ["Яблоко", "Еда", "Фрукт"],
+                        keywordsEn: ["Apple", "Food", "Fruit"],
+                        img: "../img/apple.jpg"
+                    },
+                    {
+                        titleRu: "Апельсин",
+                        titleEn: "Orange",
+                        keywordsRu: ["Апельсин", "Фрукт", "Еда", "Набор"],
+                        keywordsEn: ["Orange", "Fruit", "Food", "Set"],
+                        img: "../img/orange.jpg"
+                    },
+                    {
+                        titleRu: "Абстрактное",
+                        titleEn: "Abstract",
+                        keywordsRu: ["Абстрактное", "Еда"],
+                        keywordsEn: ["Abstract", "Food"],
+                        img: "../img/abstract.jpg"
+                    },
+                    {
+                        titleRu: "Еда",
+                        titleEn: "Food",
+                        keywordsRu: ["Еда"],
+                        keywordsEn: ["Food"],
+                        img: "../img/food.jpg"
+                    }
+                ],
+                langsList: [
+                    { id: 0, lang: "en" },
+                    { id: 1, lang: "ru" },
+                ]
+            },
+        })
+    </script>
+</body>
+
+</html>
